@@ -56,7 +56,7 @@ In **post-exploitation**, **persistence**, or **evasion** scenarios, code caves 
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/your-username/cave-hunter.git
+   git clone https://github.com/your-username/cavehunter.git
    cd cave-hunter
    ```
 
@@ -69,7 +69,7 @@ In **post-exploitation**, **persistence**, or **evasion** scenarios, code caves 
 3. **(Optional) Make script executable**
 
    ```bash
-   chmod +x codecavefinder.py
+   chmod +x cavehunter.py
    ```
 
 ---
@@ -77,7 +77,7 @@ In **post-exploitation**, **persistence**, or **evasion** scenarios, code caves 
 ## 🚀 Usage
 
 ```bash
-./codecavefinder.py [OPTIONS] <PE_file_path>
+./cavehunter.py [OPTIONS] <PE_file_path>
 ```
 
 | Option              | Description                                    |
@@ -95,19 +95,19 @@ In **post-exploitation**, **persistence**, or **evasion** scenarios, code caves 
 * **Basic scan** (≥300 bytes in all sections):
 
   ```bash
-  ./codecavefinder.py sample.exe
+  ./cavehunter.py sample.exe
   ```
 
 * **Executable sections only**, caves ≥ 500 bytes:
 
   ```bash
-  ./codecavefinder.py -e -m 500 target.dll
+  ./cavehunter.py -e -m 500 target.dll
   ```
 
 * **Code-only sections**:
 
   ```bash
-  ./codecavefinder.py --code-only mypayload.exe
+  ./cavehunter.py --code-only mypayload.exe
   ```
 
 * **Read+execute sections only**:

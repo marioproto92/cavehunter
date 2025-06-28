@@ -30,6 +30,9 @@ def find_code_caves(pe, min_cave_size, exec_only=False, code_only=False, rx_only
     :return: lista di dizionari con dettagli di ciascun cave
     """
     caves = []
+    # Changed: Added support for multiple filler bytes (0x00, 0xCC, 0x90)
+    fillers = {0x00, 0xCC, 0x90}  # NULL, INT3, and NOP instructions
+    
     for section in pe.sections:
         # Nome sezione senza null terminator
         name = section.Name.rstrip(b'\x00').decode('ascii', errors='ignore')
@@ -57,9 +60,11 @@ def find_code_caves(pe, min_cave_size, exec_only=False, code_only=False, rx_only
         idx    = 0
         length = len(raw_data)
         while idx < length:
-            if raw_data[idx] == 0x00:
+            # Changed: Check for any filler byte instead of just 0x00
+            if raw_data[idx] in fillers:
                 run_start = idx
-                while idx < length and raw_data[idx] == 0x00:
+                # Changed: Check for consecutive filler bytes
+                while idx < length and raw_data[idx] in fillers:
                     idx += 1
                 run_len = idx - run_start
                 if run_len >= min_cave_size:
@@ -114,6 +119,11 @@ def main():
         "-m", "--min-size", type=int, default=300,
         help="Dimensione minima del code cave in byte (default: 300)"
     )
+    # Changed: Added new argument for custom filler bytes
+    parser.add_argument(
+        "--fillers", type=str, default="00,CC,90",
+        help="Byte riempitivi da cercare (hex separati da virgola, default: 00,CC,90)"
+    )
     group = parser.add_mutually_exclusive_group()
     group.add_argument(
         "-e", "--exec-only", action="store_true",
@@ -136,6 +146,8 @@ def main():
 
     print(f"[*] Analisi del file: {args.file}")
     print(f"[*] Dimensione minima dei code cave: {args.min_size} byte")
+    # Changed: Show which filler bytes are being used
+    print(f"[*] Cercando byte riempitivi: {args.fillers}")
     mode = (
         "exec-only" if args.exec_only else
         "code-only" if args.code_only else

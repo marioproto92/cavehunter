@@ -80,13 +80,14 @@ In **post-exploitation**, **persistence**, or **evasion** scenarios, code caves 
 ./cavehunter.py [OPTIONS] <PE_file_path>
 ```
 
-| Option              | Description                                    |
-| ------------------- | ---------------------------------------------- |
-| `-m`, `--min-size`  | Minimum cave size in bytes (default: `300`)    |
-| `-e`, `--exec-only` | Scan only executable sections                  |
-| `--code-only`       | Scan only sections with `IMAGE_SCN_CNT_CODE`   |
-| `--rx-only`         | Scan only readable **and** executable sections |
-| `-h`, `--help`      | Show usage and exit                            |
+| Option              | Description                                                        |
+| ------------------- | -------------------------------------------------------------------| 
+| `-m`, `--min-size`  | Minimum cave size in bytes (default: `300`)                        |
+| `-e`, `--exec-only` | Scan only executable sections                                      |
+| `--code-only`       | Scan only sections with `IMAGE_SCN_CNT_CODE`                       |
+| `--fillers`         | New --fillers option to specify custom bytes (default: 00,CC,90)   |
+| `--rx-only`         | Scan only readable **and** executable sections                     |
+| `-h`, `--help`      | Show usage and exit                                                |
 
 ---
 
